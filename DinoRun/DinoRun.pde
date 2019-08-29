@@ -17,7 +17,6 @@ void setup()
 {
   frameRate(60);
   size(1080,720);
-  int floorHeight = height/2;
 }
 
 void draw()
@@ -103,6 +102,3 @@ void movePlayer()
 {
   players.get(0).move(floorHeight);
 }
-
-
-  
