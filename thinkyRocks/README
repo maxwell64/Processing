@@ -1,1 +1,5 @@
-My friend Trystan is terrified of a future where "thinky rocks" rise up and kill us all because of our hubris, so I'm learning to teach some rocks to think. (Tutorial: https://www.youtube.com/watch?v=BOZfhUcNiqk)
+My friend Trystan is terrified of a future where "thinky rocks" rise up and kill us all because of our hubris, so I'm learning to teach some rocks to think. 
+
+The "rocks" use a genetic algorithm to determine which from the previous generation came closest to the "goal" (the red dot), and clone their moveset to improve the average path. The green dot is the best example from the previous generation. Each step has a small (1%) chance to "mutate", causing the "rock" to move in a random direction, possibly leading to a better path.
+
+(Tutorial: https://www.youtube.com/watch?v=BOZfhUcNiqk)
