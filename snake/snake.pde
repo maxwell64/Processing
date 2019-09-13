@@ -22,7 +22,6 @@ void draw(){
     
   }
   keepScore();
-  printMoves();
   step ++;
   
 }
@@ -31,12 +30,5 @@ void keepScore(){
   fill(0,0,255);
   textSize(30);
   text("Score = " + score, width/2,50);
-  
-}
-
-void printMoves(){
-  fill(0,0,255);
-  textSize(25);
-  text(player.moves.size(),width/2,100);
   
 }

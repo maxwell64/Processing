@@ -21,10 +21,11 @@ class Player{
     rect(pos.x,pos.y,sideLen,sideLen);
     if (score > 0){
       for (int i = 1;i <= score;i ++){
-        temp = moves.get(step - (i*10));
+        temp = moves.get(step - (i * 10));
         rectMode(CENTER);
-        rect(temp.x,temp.y,10,10);
+        rect(temp.x,temp.y,8,8);
       }
+      checkOverlap();
     }
     if (isDead == false){
       pos.add(vel);
@@ -32,14 +33,23 @@ class Player{
       control();
       moves.add(new PVector(pos.x,pos.y));
         
-    }    
+    } 
   }
   
   void checkCrash(){
     if (pos.x - 5 <= 0 || pos.x + 5 >= width || pos.y - 5 <= 0 || pos.y + 5 >= height){
-      isDead = true;
-      
+      isDead = true;     
     }
+  }
+
+  void checkOverlap(){
+    for (int i = 1;i <= score; i ++){
+      temp = moves.get(step - (i * 10));
+      if (dist(temp.x,temp.y,pos.x,pos.y) < 10){
+        isDead = true;
+      }
+    }
+
   }
   
   void control(){
