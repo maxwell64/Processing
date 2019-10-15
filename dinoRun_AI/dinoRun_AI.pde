@@ -10,6 +10,8 @@ int width = 1080;
 boolean showNothing = false;
 int floorHeight = height/2;
 
+float playerX = width/6;
+
 float minimumObGap = 50;
 float randomObGap;
 
@@ -25,10 +27,15 @@ void draw(){
   if (!showNothing){
     if (!dead){
       gameScreen();
+      players.updatePop();
+      updateObstacles();
+      if (score > 0 && score % 10 == 0 && speed < 9.5){
+        speed += 1.5;
+      }
     }
     minimumObGap = 250/speed;
     randomObGap = random(1000/speed);
-
+    
   }
 }
 
@@ -37,11 +44,6 @@ void gameScreen(){
   stroke(0);
   strokeWeight(2);
   line(0,floorHeight,width,floorHeight);
-  players.updatePop();
-  updateObstacles();
-  if (score > 0 && score % 10 == 0 && speed < 9.5){
-    speed += 1.5;
-  }
   text(score,360,580);
   text(obstacles.size(),360,600);
   text(speed,360,620);

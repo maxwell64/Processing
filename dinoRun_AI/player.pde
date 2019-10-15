@@ -1,19 +1,27 @@
-class Player
-{
-  float playerX;
+class Player{
+  
   float playerY;
   int w = 35;
   int h = 70;
+  
   int velY = 0;
   int velYMax = -10;
   int gravity = 1;
+  
   float distanceToObstacle = 100000;
   int nearestObstacleIndex;
   int nearestObstacleHeight;
   
+  int inputs;
+  int outputs;
+  
+  float[] vision = new float[inputs];
+  float[] decision = new float[outputs];
+    
   Player(){
-    playerX = width/6;
-    playerY = height/2 - h;
+    playerY = floorHeight - h;
+    Brain brain = new Brain(inputs,outputs);
+
   }
   
   void show(){
@@ -86,11 +94,16 @@ class Player
     text(distanceToObstacle,20,20);
     text(speed,20,40);
     text(playerY,20,60);
+    vision[0] = speed;
+    vision[1] = distanceToObstacle;
+    vision[2] = playerY;
+    vision[3] = nearestObstacleHeight;
   }
   
   void think(){
-    
+      
   }
+  
   
   void act(){
     
