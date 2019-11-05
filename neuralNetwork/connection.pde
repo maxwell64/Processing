@@ -1,17 +1,14 @@
 class Connection{
   
-  Node to;
-  Node from;
+  Node nodeFrom;
+  Node nodeTo;
   float weight;
-  float output;
-  float input;
-  int index;
+  boolean enabled = true;
   
-  Connection(Node nodeFrom,Node nodeTo,int ref){
-    to = nodeTo;
-    from = nodeFrom;
-    index = ref;
+  Connection(Node from,Node to){
+    
+    nodeFrom = from;
+    nodeTo = to;
     weight = random(-1,1);
     
   }
-}
