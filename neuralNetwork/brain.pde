@@ -31,6 +31,7 @@ class Brain{
     if (nodes.get(rand1).layer >= nodes.get(rand2).layer) return true;
     if (nodes.get(rand1).isConnectedTo(nodes.get(rand2))) return true;
     
+    return false;
   }
   
   void makeConnections(){
