@@ -5,7 +5,8 @@ class Brain{
   ArrayList<Node> network = new ArrayList<Node>();
   int inputs;
   int outputs;
-  nodeCounter = 0;
+  int nodeCounter = 0;
+  float[] outputValues;
   
   Brain(int in,int out){
     
@@ -51,8 +52,30 @@ class Brain{
       
     }
     for (int i = 0;i < connections.size();i ++){
-      connections.get(i).from.outputConnections.add(connections.get(i));
+      connections.get(i).nodeFrom.outputConnections.add(connections.get(i));
       
     }
+  }
+  
+  float[] feedForward(float[] inputValues){
+    for (int i = 0;i < inputs;i ++){
+      nodes.get(i).output = inputValues[i];
+      
+    }
+    for (int i = 0;i < nodes.size();i ++){
+      nodes.get(i).engage();
+      
+    }
+    outputValues = new float[outputs];
+    for (int i = 0;i < outputs;i ++){
+      outputValues[i] = nodes.get(inputs + i).output;
+      
+    }
+    for (int i = 0;i < nodes.size();i ++){
+      nodes.get(i).inputSum = 0;
+      
+    }
+    return outputValues;
+    
   }
 }

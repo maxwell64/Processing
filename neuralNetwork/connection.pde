@@ -12,3 +12,4 @@ class Connection{
     weight = random(-1,1);
     
   }
+}
