@@ -11,23 +11,16 @@ class Population{
   
   void update(){
     for (int i = 0;i < pop.size();i ++){
-      pop.get(i).update();
+      if (!pop.get(i).dead){
+        pop.get(i).update();
       
+      }
     }
   }
   
   void showAll(){
     for (int i = 0;i < pop.size();i ++){
       pop.get(i).show();
-      
-    }
-  }
-  
-  void engage(){
-    for (int i = 0;i < pop.size();i ++){
-      pop.get(i).brain.connect();
-      pop.get(i).brain.engage();
-      pop.get(i).brain.show();
       
     }
   }
@@ -39,6 +32,16 @@ class Population{
   int size(){
     return pop.size();
   }
+  
+  void assignFitness(){
+    for (int i = 0;i < pop.size();i ++){
+      if (pop.get(i).dead){
+        pop.get(i).fitness = score;
+        
+      }
+    }
+  }
+      
 }
     
     

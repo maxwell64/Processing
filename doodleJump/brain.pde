@@ -1,36 +1,45 @@
 class Brain{
+  
   ArrayList<Node> nodes = new ArrayList<Node>();
   ArrayList<Connection> connections = new ArrayList<Connection>();
-  int i;
-  int action;
-  float nearestDist;
-  Platform nearest;
-  float[] sight = new float[4];
-  float[] control = new float[3];
-  float velY;
-  float velX;
-  int in;
-  int out;
+  ArrayList<Node> network = new ArrayList<Node>();
+  int inputs;
+  int outputs;
+  int nodeCounter = 0;
+  float[] outputValues;
   
-  Brain(int inputs,int outputs){
-    in = inputs;
-    out = outputs;
-    for (i = 0;i < inputs;i ++){
-      nodes.add(new Node(i));
-      nodes.get(i).layer = 0;
+  Brain(int in,int out){
+    
+    inputs = in;
+    outputs = out;
+    
+    for (int i = 0;i < inputs;i ++){
+      nodes.add(new Node(nodeCounter));
+      nodes.get(nodeCounter).layer = 0;
+      nodeCounter ++;
       
     }
-    for (i = 0;i < outputs;i ++){
-      nodes.add(new Node(i + inputs));
-      nodes.get(i + inputs).layer = 1;
+    for (int i = 0;i < outputs;i ++){
+      nodes.add(new Node(nodeCounter));
+      nodes.get(nodeCounter).layer = 1;
+      nodeCounter ++;
       
     }
+    connect();
   }
   
-  void connect(){
-    for (i = 0;i < nodes.size();i ++){
+  boolean randomNodesBad(int rand1,int rand2){
+    if (rand1 == rand2) return true;
+    if (nodes.get(rand1).layer >= nodes.get(rand2).layer) return true;
+    if (nodes.get(rand1).isConnectedTo(nodes.get(rand2))) return true;
+    
+    return false;
+  }
+  
+  void makeConnections(){
+    for (int i = 0;i < nodes.size();i ++){
       for (int j = 0;j < nodes.size();j ++){
-        if (nodes.get(j).layer > nodes.get(i).layer){
+        if (!randomNodesBad(i,j) && !nodes.get(i).isConnectedTo(nodes.get(j))){
           connections.add(new Connection(nodes.get(i),nodes.get(j)));
           
         }
@@ -38,56 +47,37 @@ class Brain{
     }
   }
   
-  void engage(){
-    for (i = 0;i < nodes.size();i ++){
+  void connect(){
+    for (int i = 0;i < nodes.size();i ++){
+      nodes.get(i).outputConnections.clear();
+      
+    }
+    makeConnections();
+    for (int i = 0;i < connections.size();i ++){
+      connections.get(i).nodeFrom.outputConnections.add(connections.get(i));
+      
+    }
+  }
+  
+  float[] feedForward(float[] inputValues){
+    for (int i = 0;i < inputs;i ++){
+      nodes.get(i).output = inputValues[i];
+      
+    }
+    for (int i = 0;i < nodes.size();i ++){
       nodes.get(i).engage();
+      
     }
-  }
-  
-  void findNearest(){
-    for (int j = 0;j < group.size();j ++){
-      for (i = 0;i < platforms.size();i ++){
-        if (dist(platforms.get(i).posX,platforms.get(i).posY,group.get(j).posX,group.get(j).posY) < nearestDist){
-          nearest = platforms.get(i);
-          nearestDist = dist(nearest.posX,nearest.posY,group.get(j).posX,group.get(j).posY);
-          
-        }
-      }
+    outputValues = new float[outputs];
+    for (int i = 0;i < outputs;i ++){
+      outputValues[i] = nodes.get(inputs + i).output;
+      
     }
-  }
-  
-  void show(){
-    fill(255);
-    for (i = 0;i < in;i ++){
-      ellipse(120 + nodes.get(i).layer * 120,20 + 20 * i,10,10);
+    for (int i = 0;i < nodes.size();i ++){
+      nodes.get(i).inputSum = 0;
+      
     }
-    for (i = 0;i < out;i ++){
-      ellipse(120 + nodes.get(i + in).layer * 120,20 + 20 * i,10,10);
-    }
-    fill(0);
-    text(connections.size(),120,10);
-  }
-  
-  void look(){
-    findNearest();
-    sight[0] = velX;
-    sight[1] = velY;
-    sight[2] = nearest.posX;
-    sight[3] = nearest.posY;
-
-  }
-  
-  void think(){
-    connect();
-    engage();
+    return outputValues;
     
   }
-  
-  void act(){
-    for (i = 0;i < control.length;i ++){
-      if (nodes.get(in + i).output > action){
-        action = in + i;
-      }
-    }
-  }    
 }

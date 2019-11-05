@@ -8,7 +8,7 @@ int nearestX;
 void setup(){
   size(360,540);
   frameRate(60);
-  group = new Population(1);
+  group = new Population(5);
   
 }
 
@@ -25,6 +25,7 @@ void gameScreen(){
   group.showAll();
   updatePlatforms();
   checkCollision();
+  text(platforms.size(),30,50);
 
 }
 
@@ -51,6 +52,18 @@ void checkCollision(){
       if (group.get(j).velY > 0 && platforms.get(i).posX < group.get(j).posX && group.get(j).posX < platforms.get(i).posX + 100 
       && platforms.get(i).posY <= group.get(j).posY && group.get(j).posY < platforms.get(i).posY + 10){
         group.get(j).velY *= -1;
+      }
+      if (group.get(j).posX <= 0){
+        group.get(j).posX = 0;
+        
+      }
+      if (group.get(j).posX >= width){
+        group.get(j).posX = width;
+        
+      }
+      if (group.get(j).posY >= height){
+        group.get(j).dead = true;
+        
       }
     }
   }

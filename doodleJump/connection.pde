@@ -1,15 +1,15 @@
 class Connection{
   
-  Node from;
-  Node to;
+  Node nodeFrom;
+  Node nodeTo;
   float weight;
-  float output;
+  boolean enabled = true;
   
-  Connection(Node nodeFrom,Node nodeTo){
-    from = nodeFrom;
-    to = nodeTo;
+  Connection(Node from,Node to){
+    
+    nodeFrom = from;
+    nodeTo = to;
     weight = random(-1,1);
-    output = from.output * weight;
     
   }
 }
