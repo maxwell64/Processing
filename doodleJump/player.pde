@@ -6,6 +6,7 @@ class Player{
   int dimensions = 15;
   Brain brain;
   int fitness = 0;
+  int velMax = 20;
   boolean dead = false;
   float[] sights = new float[7];
   float[] decisions = new float[3];
@@ -32,18 +33,19 @@ class Player{
     posX += velX;
     posY += velY;
     velY += gravity;
-    if (velY > 20){
-      velY = 20;
+    if (velY > velMax){
+      velY = velMax;
       
     }
-    if (velY < -20){
-      velY = -20;
+    if (velY < -velMax){
+      velY = -velMax;
       
     }
     fitness ++;
     look();
     think();
     act();
+    
   } 
   
   void left(){
@@ -78,6 +80,7 @@ class Player{
     if (platforms.size() > 0){
       sights[1] = nearestPlatform.posX;
       sights[2] = nearestPlatform.posY;
+      
     }
     sights[3] = posX;
     sights[4] = posY;

@@ -9,7 +9,6 @@ class Brain{
   float[] outputValues;
   
   Brain(int in,int out){
-    
     inputs = in;
     outputs = out;
     
@@ -40,7 +39,7 @@ class Brain{
     for (int i = 0;i < nodes.size();i ++){
       for (int j = 0;j < nodes.size();j ++){
         if (!randomNodesBad(i,j) && !nodes.get(i).isConnectedTo(nodes.get(j))){
-          connections.add(new Connection(nodes.get(i),nodes.get(j)));
+          connections.add(new Connection(nodes.get(i),nodes.get(j),random(-1,1)));
           
         }
       }
@@ -79,5 +78,5 @@ class Brain{
     }
     return outputValues;
     
-  }
+  } 
 }

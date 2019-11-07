@@ -21,11 +21,22 @@ void draw(){
 
 void gameScreen(){
   background(255);
-  group.update();
-  group.showAll();
+  if (!group.allDead()){
+    group.update();
+    group.showAll();
+    
+  }
+  if (group.allDead()){
+    score = 0;
+    platformTimer = 0;
+    platforms.clear();
+    group = new Population(5);
+    
+  }
   updatePlatforms();
   checkCollision();
   text(platforms.size(),30,50);
+  text(score,30,30);
 
 }
 

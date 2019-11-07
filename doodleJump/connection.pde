@@ -5,11 +5,10 @@ class Connection{
   float weight;
   boolean enabled = true;
   
-  Connection(Node from,Node to){
-    
+  Connection(Node from,Node to,float w){
     nodeFrom = from;
     nodeTo = to;
-    weight = random(-1,1);
+    weight = w;
     
   }
 }
